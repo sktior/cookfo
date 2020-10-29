@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mabatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.memberDAO-mapper">
+	
+	<insert id="newMember" parameterType="com.ms.cook.member.vo.MemberVO">
+		insert into member(id,pw,name,address,profile,email) values(#{id},#{pw},#{name},#{address},#{profile},#{email})
+	</insert>
+
+</mapper>
