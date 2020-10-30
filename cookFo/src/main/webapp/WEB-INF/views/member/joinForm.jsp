@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div class="col-sm-6 col-md-offset-3">
-			<form role="form">
+			<form role="form" action="${pageContext.request.contextPath}/member/newMember" method="post">
 				<div class="form-group">
 					<label for="inputName">성명</label> <input type="text"
 						class="form-control" id="inputName" placeholder="이름을 입력해 주세요">
@@ -64,7 +64,7 @@
 					<input type="hidden" id="email">
 				</div>
 				<div class="form-group">
-					<label for="InputProfile">프로필</label> <input type="file" id="file">
+					<label for="InputProfile">프로필</label> <input type="text" id="file">
 				</div>
 
 
