@@ -3,7 +3,19 @@
 <mapper namespace="mappers.memberDAO-mapper">
 	
 	<insert id="newMember" parameterType="com.ms.cook.member.vo.MemberVO">
-		insert into member(id,pw,name,address,profile,email) values(#{id},#{pw},#{name},#{address},#{profile},#{email})
+		insert into member(id,pw,name,address,email) values(#{id},#{pw},#{name},#{address},#{email})
 	</insert>
-
+	
+	<select id="chkID" parameterType="String" resultType="int">
+		select count(*) from member where id = #{id}
+	</select>
+	
+	<select id="chkEMAIL" parameterType="String" resultType="int">
+		select count(*) from member where email = #{email}
+	</select>
+	
+	<select id="login" parameterType="String" resultType="com.ms.cook.member.vo.MemberVO">
+		select id,pw,name,address,cdate,email from member where id = #{id}
+	</select>
+	
 </mapper>

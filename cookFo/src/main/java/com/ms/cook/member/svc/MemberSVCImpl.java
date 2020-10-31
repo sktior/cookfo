@@ -1,5 +1,7 @@
 package com.ms.cook.member.svc;
 
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,5 +20,20 @@ public class MemberSVCImpl implements MemberSVC {
 	@Override
 	public int newMember(MemberVO vo) {
 		return memberDAO.newMember(vo);
+	}
+	
+	@Override
+	public Map<String, String> chkID(String id) {
+		return memberDAO.chkID(id);
+	}
+	
+	@Override
+	public Map<String, String> chkEMAIL(String email) {
+		return memberDAO.chkEMAIL(email);
+	}
+	
+	@Override
+	public MemberVO login(String id) {
+		return memberDAO.login(id);
 	}
 }

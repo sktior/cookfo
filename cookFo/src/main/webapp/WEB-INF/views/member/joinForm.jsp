@@ -30,27 +30,31 @@
 			</div>
 		</div>
 		<div class="col-sm-6 col-md-offset-3">
-			<form role="form" action="${pageContext.request.contextPath}/member/newMember" method="post">
+			<form role="form" action="#" id="memberForm">
 				<div class="form-group">
 					<label for="inputName">성명</label> <input type="text"
-						class="form-control" id="inputName" placeholder="이름을 입력해 주세요">
+						class="form-control" id="name" name="name" placeholder="이름을 입력해 주세요">
 				</div>
 				<div class="form-group">
 					<label for="inputId">아이디</label> <input type="text"
-						class="form-control" id="inputName" placeholder="이름을 입력해 주세요">
+						class="form-control" id="id" name="id" placeholder="이름을 입력해 주세요">
+						<button type="button" id="idchk" class="btn btn-primary" onclick="chkID();">중복체크</button>
+						<div id="idMessage"></div>
 				</div>
 				<div class="form-group">
 					<label for="inputPassword">비밀번호</label> <input type="password"
-						class="form-control" id="inputPassword" placeholder="비밀번호를 입력해주세요">
+						class="form-control" id="pw" name="pw" placeholder="비밀번호를 입력해주세요">
 				</div>
 				<div class="form-group">
 					<label for="inputPasswordCheck">비밀번호 확인</label> <input
-						type="password" class="form-control" id="inputPasswordCheck"
+						type="password" class="form-control" id="pwchk"
 						placeholder="비밀번호 확인을 위해 다시한번 입력 해 주세요">
 				</div>
 				<div class="form-group">
 					<label for="InputEmail">이메일</label> <input type="email"
-						class="form-control" id="InputEmail" placeholder="이메일 주소를 입력해주세요">
+						class="form-control" id="email" name="email" placeholder="이메일 주소를 입력해주세요">
+					<button type="button" id="emailchk" class="btn btn-primary" onclick="chkEMAIL();">중복체크</button>
+					<div id="emailMessage"></div>
 				</div>
 				<div class="form-group">
 					<label for="InputAddress">주소</label> <input type="text"
@@ -61,15 +65,11 @@
 					<button type="button" id="findAddress" class="btn btn-primary" onclick="execPostCode();">
 						주소검색<i class="fa fa-check spaceLeft"></i>
 					</button>
-					<input type="hidden" id="email">
+					<input type="hidden" id="address" name="address">
 				</div>
-				<div class="form-group">
-					<label for="InputProfile">프로필</label> <input type="text" id="file">
-				</div>
-
 
 				<div class="form-group text-center">
-					<button type="submit" id="join-submit" class="btn btn-primary">
+					<button type="button" id="join-submit" class="btn btn-primary">
 						회원가입<i class="fa fa-check spaceLeft"></i>
 					</button>
 					<button type="submit" class="btn btn-warning">
@@ -131,6 +131,98 @@
         }).open();
     }
 		
+	</script>
+	
+	<script type="text/javascript">
+	function chkID(){
+		let id = $('#id').val();
+		if(id.length <= 4){
+			$('#idMessage').text("아이디를 5자 이상 입력해주세요");
+			$('#idMessage').css("color","red");
+			return;
+		}
+		console.log(id);
+		const info = JSON.stringify({id,id});
+		$.ajax({
+			url : "${pageContext.request.contextPath}/chk/chkID",
+			type : "post",
+			data : info,
+			dataType : "json",
+			contentType : "application/json",
+			success:function(data){
+				if(data.result == "true"){
+					$('#idMessage').text("사용할 수 있는 아이디입니다.");
+					$('#idMessage').css("color","green");
+				}else{
+					$('#idMessage').text("사용할 수 없는 아이디입니다.");
+					$('#idMessage').css("color","red");
+				}
+			}
+		})
+	}
+	function chkEMAIL(){
+		let email = $('#email').val();
+		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		if(email.match(regExp) == null){
+			$('#emailMessage').text("이메일 형식을 옳바르게 입력해주세요.");
+			$('#emailMessage').css("color","red");
+			return;
+		}
+		const info = JSON.stringify({email,email});
+		$.ajax({
+			url : "${pageContext.request.contextPath}/chk/chkEMAIL",
+			type : "post",
+			data : info,
+			dataType : "json",
+			contentType : "application/json",
+			success:function(data){
+				if(data.result == "true"){
+					$('#emailMessage').text("사용할 수 있는 이메일입니다.");
+					$('#emailMessage').css("color","green");
+				}else{
+					$('#emailMessage').text("사용할 수 없는 이메일입니다.");
+					$('#emailMessage').css("color","red");
+				}
+			}
+		})
+	}
+	</script>
+	<script type="text/javascript">
+		$('#join-submit').click(function(){
+			if($('#name').val().length == 0){
+				alert("이름을 입력하세요.");
+				return;
+			}
+			if(document.getElementById('idMessage').innerText != '사용할 수 있는 아이디입니다.'){
+				alert("아이디를 확인하세요.");
+				return;
+			}
+			var pw = $('#pw').val();
+			var checkpw = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{10,12}$/.test(pw);  //영문,특수문자
+			console.log(pw);
+			if(!checkpw){
+				alert("비밀번호를 특수문자를 포함하여 입력하세요");
+				return;
+			}
+			if( pw != $('#pwchk').val()){
+				alert("비밀번호가 일치하지 않습니다.");
+				return;
+			}
+			if(document.getElementById('emailMessage').innerText != '사용할 수 있는 이메일입니다.'){
+				alert("이메일을 확인하세요.");
+				return;	
+			}
+			$('#address').val($("#detailAddress1").val() + " " + $("#detailAddress2").val() + " " + 
+					$("#modAddress").val());
+			console.log($('#address').val());
+			if($("#detailAddress1").val().length == 0 || $("#detailAddress2").val().length == 0){
+				alert("상세주소를 입력하세요.");
+				return;
+			}
+			$('#memberForm').attr("action","${pageContext.request.contextPath}/member/newMember");
+			$('#memberForm').attr("method","post");
+			$('#memberForm').submit();
+		})
 	</script>
 </body>
 </html>

@@ -1,18 +1,25 @@
 package com.ms.cook.member.controller;
 
-import java.util.HashMap;
+import javax.inject.Inject;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ms.cook.member.svc.MemberSVC;
 import com.ms.cook.member.vo.MemberVO;
 
 @Controller
 @RequestMapping("/member/**")
 public class MemberController {
+	@Inject
+	MemberSVC memberSVC;
+	
+	@Inject
+	BCryptPasswordEncoder pwdEncoder;
+	
+	
 	/* 페이지 이동 모음 */
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginForm() {
@@ -25,11 +32,20 @@ public class MemberController {
 	}
 	
 	/* 페이지 이동 모음 끝 */
-	
+
+	/**
+	 * 회원가입
+	 * @param vo
+	 * @return
+	 */
 	@RequestMapping(value = "/newMember", method = RequestMethod.POST)
-	public void newMember(HashMap<String,String> info, MemberVO vo) {
-		System.out.println(vo.getAddress());
+	public String newMember(MemberVO vo) {
+		String pw = pwdEncoder.encode(vo.getPw());
+		vo.setPw(pw);
+		memberSVC.newMember(vo);
+		return "redirect:/";
 	}
+	
 	
 	
 }

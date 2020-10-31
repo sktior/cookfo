@@ -26,12 +26,11 @@ public class MemberTest {
 	@DisplayName("회원등록")
 	void newMember() {
 		MemberVO memberVO = new MemberVO();
-		memberVO.setId("eeee2");
+		memberVO.setId("eeee4");
 		memberVO.setPw("123123");
 		memberVO.setName("테스트");
 		memberVO.setAddress("부산");
-		memberVO.setProfile("경로");
-		memberVO.setEmail("sktior@naver.com");
+		memberVO.setEmail("sktior223@naver.com");
 		
 		int cnt = memberDAO.newMember(memberVO);
 		Assertions.assertEquals(1, cnt);

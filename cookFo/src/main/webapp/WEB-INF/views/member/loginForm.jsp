@@ -24,13 +24,13 @@
 	<%@ include file="/WEB-INF/views/include/nav.jsp"%>
 		<div class="container " style='width:1000px;'>
 			<!-- 입력폼 그리드 -->
-				<form action="loginAsk" method="post">
+				<form action="${pageContext.request.contextPath}/loginC/login" method="post">
 					<!-- ID입력 -->
 					<div class="input-group mt-3 mb-1">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="basic-addon1">ID</span>
 						</div>
-						<input type="text" name="userID" class="form-control"
+						<input type="text" name="id" id="id" class="form-control"
 							placeholder="Input ID" aria-label="Input ID"
 							aria-describedby="basic-addon1" required>
 					</div>
@@ -39,7 +39,7 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="basic-addon1">PW</span>
 						</div>
-						<input type="password" name="userPW" class="form-control"
+						<input type="password" name="pw" id="pw" class="form-control"
 							placeholder="Input Password" aria-label="Input Password"
 							aria-describedby="basic-addon1" required>
 					</div>
