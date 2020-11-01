@@ -30,6 +30,12 @@ public class ChkRestController {
 		return memberSVC.chkID(id);
 	}
 	
+	/**
+	 * 이메일 중복 체크
+	 * @param info
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/chkEMAIL", method = RequestMethod.POST)
 	public @ResponseBody Map<String, String> chkEMAIL(@RequestBody HashMap<String,String> info) throws Exception{
 		String email = info.get("email");

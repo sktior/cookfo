@@ -36,4 +36,9 @@ public class MemberSVCImpl implements MemberSVC {
 	public MemberVO login(String id) {
 		return memberDAO.login(id);
 	}
+	
+	@Override
+	public int doMod(MemberVO vo) {
+		return memberDAO.doMod(vo);
+	}
 }

@@ -51,4 +51,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberVO login(String id) {
 		return sqlSession.selectOne("mappers.memberDAO-mapper.login", id);
 	}
+	
+	@Override
+	public int doMod(MemberVO vo) {
+		return sqlSession.update("mappers.memberDAO-mapper.doMod",vo);
+	}
 }

@@ -30,6 +30,16 @@ public class MemberController {
 	public String joinForm() {
 		return "member/joinForm";
 	}
+
+	@RequestMapping(value = "/modForm", method = RequestMethod.GET)
+	public String modForm() {
+		return "member/modForm";
+	}
+	
+	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
+	public String myPage() {
+		return "member/MyPage";
+	}
 	
 	/* 페이지 이동 모음 끝 */
 
@@ -46,6 +56,13 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "/doMod", method = RequestMethod.POST)
+	public String doMod(MemberVO vo) {
+		String pw = pwdEncoder.encode(vo.getPw());
+		vo.setPw(pw);
+		memberSVC.doMod(vo);
+		return "redirect:/";
+	}
 	
 	
 }
