@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mabatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.recipeDAO-mapper">
+	
+	<insert id="addRecipe" parameterType="com.ms.cook.recipe.vo.RecipeVO">
+		insert into recipe values(recipe_seq.nextval, #{name},#{category},#{way},#{kcal},#{pro},
+									#{fat},#{img1},#{img2},#{img3},#{img4},#{img5})
+	</insert>
+
+</mapper>

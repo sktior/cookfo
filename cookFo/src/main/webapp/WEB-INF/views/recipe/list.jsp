@@ -107,7 +107,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<button type="button" id="addRecipe" class="btn btn-primary" onClick="location.href='www.naver.com'">
+		<button type="button" id="addRecipe" class="btn btn-primary" onClick="location.href='${pageContext.request.contextPath}/recipe/addForm'">
 			등록<i class="fa fa-check spaceLeft"></i>
 		</button>
 	</div>
