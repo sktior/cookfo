@@ -6,5 +6,13 @@
 		insert into recipe values(recipe_seq.nextval, #{name},#{category},#{way},#{kcal},#{pro},
 									#{fat},#{img1},#{img2},#{img3},#{img4},#{img5})
 	</insert>
-
+	
+	<select id="RecipeList" resultType="com.ms.cook.recipe.vo.RecipeVO">
+		select rno,name,category,way,kcal,pro,fat,img1,img2,img3,img4,img5 from recipe
+	</select>
+	
+	<select id="viewRecipe" resultType="com.ms.cook.recipe.vo.RecipeVO">
+		select rno,name,category,way,kcal,pro,fat,img1,img2,img3,img4,img5 from recipe where rno = #{rno}
+	</select>
+	
 </mapper>

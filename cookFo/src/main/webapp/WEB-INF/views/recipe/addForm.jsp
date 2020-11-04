@@ -67,31 +67,31 @@
 						</tr>
 						<tr>
 							<td><input type="file" class="form-control-file border"
-								name="img1" id="img1_t">
+								name="img1_t" id="img1_t">
 								<div class="select_img"><img src="" /></div>
 							</td>
 						</tr>
 						<tr>
 							<td><input type="file" class="form-control-file border"
-								name="img2" id="img2_t">
+								name="img2_t" id="img2_t">
 								<div class="select_img2"><img src="" /></div>
 							</td>
 						</tr>
 						<tr>
 							<td><input type="file" class="form-control-file border"
-								name="img3" id="img3_t">
+								name="img3_t" id="img3_t">
 								<div class="select_img3"><img src="" /></div>	
 							</td>
 						</tr>
 						<tr>
 							<td><input type="file" class="form-control-file border"
-								name="img4" id="img4_t">
+								name="img4_t" id="img4_t">
 								<div class="select_img4"><img src="" /></div>
 							</td>
 						</tr>
 						<tr>
 							<td><input type="file" class="form-control-file border"
-								name="img5" id="img5_t">
+								name="img5_t" id="img5_t">
 								<div class="select_img5"><img src="" /></div>	
 							</td>
 						</tr>
@@ -111,6 +111,7 @@
 		$("#img1")
 				.change(
 						function() {
+							console.log("Ddd");
 							if (this.files && this.files[0]) {
 								var reader = new FileReader;
 								reader.onload = function(data) {

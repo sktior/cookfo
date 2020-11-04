@@ -1,5 +1,7 @@
 package com.ms.cook.recipe.svc;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,7 +17,16 @@ public class RecipeSVCImpl implements RecipeSVC {
 	
 	@Override
 	public int add(RecipeVO vo) {
-		System.out.println("svc : " + vo.toString());
 		return recipeDAO.add(vo);
+	}
+	
+	@Override
+	public List<RecipeVO> RecipeList() {
+		return recipeDAO.RecipeList();
+	}
+	
+	@Override
+	public RecipeVO viewRecipe(int rno) {
+		return recipeDAO.viewRecipe(rno);
 	}
 }

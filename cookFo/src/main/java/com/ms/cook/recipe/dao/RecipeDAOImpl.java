@@ -1,5 +1,7 @@
 package com.ms.cook.recipe.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -14,8 +16,16 @@ public class RecipeDAOImpl implements RecipeDAO {
 	
 	@Override
 	public int add(RecipeVO vo) {
-		System.out.println("dao : " + vo.toString());
 		return sqlSession.insert("mappers.recipeDAO-mapper.addRecipe",vo);
-	}							  
+	}							 
+	@Override
+	public List<RecipeVO> RecipeList() {
+		return sqlSession.selectList("mappers.recipeDAO-mapper.RecipeList");
+	}
+	
+	@Override
+	public RecipeVO viewRecipe(int rno) {
+		return sqlSession.selectOne("mappers.recipeDAO-mapper.viewRecipe",rno);
+	}
 	
 }

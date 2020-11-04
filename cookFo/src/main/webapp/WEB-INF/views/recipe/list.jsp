@@ -44,70 +44,23 @@
 		</div>
 		<br> <br>
 		<div class="row text-center">
-			<div class="col-sm-4">
-				<div class="thumbnail">
-					<img src="../resources/img/된장.jpg" alt="Random Name"
-						style="width: 200; height: 200;">
-					<p>
-						<strong>된장찌개</strong>
-					</p>
-					<p>국</p>
+			<c:forEach var="row" items="${list }">
+				<div class="col-sm-4">
+					<div class="thumbnail">
+						<img src="http://localhost:9080/img/${row.img1 }"
+							alt="Random Name" style="width: 200; height: 200;">
+						<p>
+							<strong><a href="${pageContext.request.contextPath}/recipe/recipeView/${row.rno}">${row.name }</a></strong>
+						</p>
+						<p>${row.category }</p>
+					</div>
 				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="thumbnail">
-					<img src="../resources/img/된장.jpg" alt="Random Name"
-						style="width: 200; height: 200;">
-					<p>
-						<strong>김치찌개</strong>
-					</p>
-					<p>국</p>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="thumbnail">
-					<img src="../resources/img/된장.jpg" alt="Random Name"
-						style="width: 200; height: 200;">
-					<p>
-						<strong>계란말이</strong>
-					</p>
-					<p>반찬</p>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="thumbnail">
-					<img src="../resources/img/된장.jpg" alt="Random Name"
-						style="width: 200; height: 200;">
-					<p>
-						<strong>소시지 볶음</strong>
-					</p>
-					<p>반찬</p>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="thumbnail">
-					<img src="../resources/img/된장.jpg" alt="Random Name"
-						style="width: 200; height: 200;">
-					<p>
-						<strong>파전</strong>
-					</p>
-					<p>반찬</p>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="thumbnail">
-					<img src="../resources/img/된장.jpg" alt="Random Name"
-						style="width: 200; height: 200;">
-					<p>
-						<strong>미역국</strong>
-					</p>
-					<p>국</p>
-				</div>
-			</div>
+			</c:forEach>
 		</div>
 	</div>
 	<div class="container">
-		<button type="button" id="addRecipe" class="btn btn-primary" onClick="location.href='${pageContext.request.contextPath}/recipe/addForm'">
+		<button type="button" id="addRecipe" class="btn btn-primary"
+			onClick="location.href='${pageContext.request.contextPath}/recipe/addForm'">
 			등록<i class="fa fa-check spaceLeft"></i>
 		</button>
 	</div>
