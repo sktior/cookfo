@@ -41,7 +41,7 @@
 				</c:otherwise>
 			</c:choose>
 				<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/recipe/list">레시피</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">대화방</a></li>
+				<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/chat/chatRoom">대화방</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
 			</ul>
 		</div>
