@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
@@ -53,6 +54,9 @@
 </script>
 </head>
 <body>
+	<%
+		int val = (int)((Math.random()*200)+1);
+	%>
 	<%@ include file="/WEB-INF/views/include/nav_head.jsp"%>
 	<%@ include file="/WEB-INF/views/include/nav.jsp"%>
 	<br>
@@ -78,7 +82,14 @@
 					<input type="text" class="write_msg" id="message"
 						placeholder="Type a message" style="width: 1000px;" />
 					<button type="button" style="width: 100px;" onClick="sendMessage();">전송</button>
-					<input type="hidden" id="id" value="${sessionScope.info.id }">
+					<c:choose>
+						<c:when test="${sessionScope.info ne null }">
+							<input type="hidden" id="id" value="${sessionScope.info.id }">
+						</c:when>
+						<c:otherwise>
+							<input type="hidden" id="id" value="게스트<%=val%>">
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
