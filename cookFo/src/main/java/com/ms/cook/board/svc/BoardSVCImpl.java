@@ -1,5 +1,7 @@
 package com.ms.cook.board.svc;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,5 +19,16 @@ public class BoardSVCImpl implements BoardSVC {
 	@Override
 	public int doAdd(BoardVO vo) {
 		return boardDAO.doAdd(vo);
+	}
+	
+	@Override
+	public List<BoardVO> list() {
+		// TODO Auto-generated method stub
+		return boardDAO.list();
+	}
+	
+	@Override
+	public BoardVO view(int bno) {
+		return boardDAO.view(bno);
 	}
 }

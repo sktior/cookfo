@@ -5,4 +5,13 @@
 		insert into board (bno,title,content,writer,pw) 
 		values(bno_seq.nextval,#{title},#{content},#{writer},#{pw})
 	</insert>
+	
+	<select id="list" resultType="com.ms.cook.board.vo.BoardVO">
+		select bno,title,content,writer,pw,cdate,cnt from board order by bno desc
+	</select>
+	
+	<select id="view" parameterType="int" resultType="com.ms.cook.board.vo.BoardVO">
+		select bno,title,content,writer,pw,cdate,cnt from board where bno = #{bno}
+	</select>
+	
 </mapper>

@@ -1,5 +1,7 @@
 package com.ms.cook.board.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -14,5 +16,15 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	public int doAdd(BoardVO vo) {
 		return sqlSession.insert("mappers.boardDAO-mapper.doAdd",vo);
+	}
+	
+	@Override
+	public List<BoardVO> list() {
+		return sqlSession.selectList("mappers.boardDAO-mapper.list");
+	}
+	
+	@Override
+	public BoardVO view(int bno) {
+		return sqlSession.selectOne("mappers.boardDAO-mapper.view",bno);
 	}
 }
