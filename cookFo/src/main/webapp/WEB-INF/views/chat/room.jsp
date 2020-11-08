@@ -51,6 +51,13 @@
 	function onClose(evt) {
 		$("#divChatData").append("연결 끊김");
 	}
+
+	function enterkey() {
+        if (window.event.keyCode == 13) {
+			sendMessage();
+        }
+	}
+
 </script>
 </head>
 <body>
@@ -80,7 +87,7 @@
 			<div class="type_msg">
 				<div class="input_msg_write">
 					<input type="text" class="write_msg" id="message"
-						placeholder="Type a message" style="width: 1000px;" />
+						placeholder="Type a message" style="width: 1000px;" onkeyup="enterkey();"/>
 					<button type="button" style="width: 100px;" onClick="sendMessage();">전송</button>
 					<c:choose>
 						<c:when test="${sessionScope.info ne null }">
