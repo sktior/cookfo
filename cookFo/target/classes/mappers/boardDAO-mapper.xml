@@ -14,4 +14,8 @@
 		select bno,title,content,writer,pw,cdate,cnt from board where bno = #{bno}
 	</select>
 	
+	<select id="modchk">
+		select bno,title,content,writer,pw,cdate,cnt from board where bno=#{bno} and pw=#{pw}
+	</select>
+	
 </mapper>
