@@ -2,6 +2,7 @@ package com.ms.cook.board.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ms.cook.board.svc.BoardSVC;
+import com.ms.cook.board.svc.ReplySVC;
 import com.ms.cook.board.vo.BoardVO;
 
 @Controller
@@ -24,6 +26,10 @@ public class BoardController {
 	Logger logger = LoggerFactory.getLogger("BoardController");
 	@Inject
 	BoardSVC boardSVC;
+	@Inject
+	ReplySVC replySVC;
+	
+	// 원글 부분
 	
 	@RequestMapping(value = "list", method=RequestMethod.GET)
 	public String list(Model model) {
@@ -48,19 +54,61 @@ public class BoardController {
 	@RequestMapping(value = "view/{bno}", method=RequestMethod.GET)
 	public String view(@PathVariable int bno,Model model) {
 		BoardVO vo = boardSVC.view(bno);
+		boardSVC.cntplus(bno);
 		model.addAttribute("vo",vo);
 		return "board/view";
 	}
 	
-	@ResponseBody
+	
 	@RequestMapping(value = "mod", method=RequestMethod.POST, produces="appliction/json")
-	public String mod(@RequestBody HashMap<String, String> info) throws Exception {
+	public @ResponseBody String mod(@RequestBody HashMap<String, String> info) throws Exception {
 		String pw = info.get("pw");
 		int bno = Integer.parseInt(info.get("bno"));
-		BoardVO vo = new BoardVO();
-		vo.setBno(bno);
-		vo.setPw(pw);;
-		//내일 여기서부터
-		return "success";
+		BoardVO vo = boardSVC.view(bno);
+		String result = null;
+		if(vo.getPw().equals(pw)) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		return result;
 	}
+	
+	@RequestMapping(value = "domod", method=RequestMethod.POST)
+	public String domod(BoardVO vo) {
+		String content = ((String)vo.getContent().replace("\r\n", "<br>"));
+		vo.setContent(content);
+		boardSVC.domod(vo);
+		return "redirect:list";
+	}
+	
+	@RequestMapping(value = "dodel", method=RequestMethod.POST, produces="application/json")
+	public @ResponseBody int dodel(@RequestBody HashMap<String, String> info) {
+		int bno = Integer.parseInt(info.get("bno"));
+		System.out.println(bno);
+		return boardSVC.dodel(bno);
+	}
+	
+	// 원글 끝
+	
+	
+	
+	
+	// 댓글 부분
+	
+	@RequestMapping(value = "replyAdd", method=RequestMethod.POST, produces="application/json")
+	public @ResponseBody Object replyAdd(@RequestBody HashMap<String, Object> param) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		int ret = replySVC.replyAdd(param);
+		if(ret > 0) {
+			result.put("code", "OK");
+			result.put("message", "등록되었습니다.");
+		}else {
+			result.put("code", "FAIL");
+			result.put("message", "등록에 실패했습니다.");
+		}
+		return result;
+	}
+	
+	// 댓글 끝
 }

@@ -27,4 +27,19 @@ public class BoardDAOImpl implements BoardDAO {
 	public BoardVO view(int bno) {
 		return sqlSession.selectOne("mappers.boardDAO-mapper.view",bno);
 	}
+	
+	@Override
+	public int cntplus(int bno) {
+		return sqlSession.update("mappers.boardDAO-mapper.cntplus",bno);
+	}
+	
+	@Override
+	public int domod(BoardVO vo) {
+		return sqlSession.update("mappers.boardDAO-mapper.domod",vo);
+	}
+	
+	@Override
+	public int dodel(int bno) {
+		return sqlSession.delete("mappers.boardDAO-mapper.dodel",bno);
+	}
 }
