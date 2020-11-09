@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ms.cook.board.svc.BoardSVC;
 import com.ms.cook.board.svc.ReplySVC;
 import com.ms.cook.board.vo.BoardVO;
+import com.ms.cook.board.vo.ReplyVO;
 
 @Controller
 @RequestMapping("/board/**")
@@ -54,8 +55,10 @@ public class BoardController {
 	@RequestMapping(value = "view/{bno}", method=RequestMethod.GET)
 	public String view(@PathVariable int bno,Model model) {
 		BoardVO vo = boardSVC.view(bno);
+		List<ReplyVO> replylist = replySVC.replyList(bno);
 		boardSVC.cntplus(bno);
 		model.addAttribute("vo",vo);
+		model.addAttribute("reply",replylist);
 		return "board/view";
 	}
 	
@@ -96,7 +99,7 @@ public class BoardController {
 	
 	// 댓글 부분
 	
-	@RequestMapping(value = "replyAdd", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value = "replyAdd", method=RequestMethod.POST)
 	public @ResponseBody Object replyAdd(@RequestBody HashMap<String, Object> param) {
 		Map<String,Object> result = new HashMap<String,Object>();
 		int ret = replySVC.replyAdd(param);
@@ -109,6 +112,7 @@ public class BoardController {
 		}
 		return result;
 	}
+	
 	
 	// 댓글 끝
 }

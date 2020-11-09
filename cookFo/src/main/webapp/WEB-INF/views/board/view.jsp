@@ -67,15 +67,15 @@
 
 	<br>
 	<br>
-	
+
 	<!-- 댓글 부분 -->
 	<div class="container">
+		<input type="hidden" id="writer" value="${sessionScope.info.id }">
 		<form id="commentForm" name="commentForm" method="post">
-			<br>
-			<br>
+			<br> <br>
 			<div>
 				<div>
-					<span><strong>댓글</strong></span> 
+					<span><strong>댓글</strong></span>
 				</div>
 				<div>
 					<table class="table">
@@ -84,7 +84,10 @@
 									id="content" name="content" placeholder="댓글을 입력하세요"></textarea>
 								<br>
 								<div>
-									<a href='#' class="btn pull-right btn-primary">등록</a>
+									<a href='javascript:;' class="btn pull-right btn-primary"
+										id="replyBtn">등록</a> <input type="password" id="replypw"
+										placeholder="패스워드">
+									<div id="replypwmsg"></div>
 								</div></td>
 						</tr>
 					</table>
@@ -94,10 +97,30 @@
 	</div>
 	<div class="container">
 		<form id="commentListForm" name="commentListForm" method="post">
-			<div id="commentList">ㅁㄴㅇㅁㄴㅇ</div>
+			<div id="commentList">
+				<c:forEach var="row" items="${reply }">
+					<div>
+						<div>
+							<table class='table'>
+								<h6>
+									<strong>${row.writer }</strong>
+								</h6>
+								${row.content }
+								<c:if test="${sessionScope.info.id eq row.writer }">
+								<a href='javascript:;' class="btn pull-right btn-primary"
+									id="replydelBtn">삭제</a>
+									</c:if>
+								<tr>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
 		</form>
 	</div>
-	
+
 	<!-- 모달 -->
 
 	<div class="modal" id="modModal">
@@ -291,32 +314,94 @@
 				}
 			});
 		})
-		function del(){
+		function del() {
 			var bno = $('#bno').val();
 			const info = JSON.stringify({
 				bno : bno
 			});
-			$.ajax({
-				data : info,
-				url : "${pageContext.request.contextPath}/board/dodel",
-				type : "post",
-				dataType : "text",
-				contentType : "application/json; charset=UTF-8",
-				success : function(data) {
-					console.log(data);
-					if (data == 1) {
-						alert("삭제되었습니다.");
-						window.location.href="${pageContext.request.contextPath}/board/list";
+			$
+					.ajax({
+						data : info,
+						url : "${pageContext.request.contextPath}/board/dodel",
+						type : "post",
+						dataType : "text",
+						contentType : "application/json; charset=UTF-8",
+						success : function(data) {
+							console.log(data);
+							if (data == 1) {
+								alert("삭제되었습니다.");
+								window.location.href = "${pageContext.request.contextPath}/board/list";
 
-					} else {
-						alert("에러가 발생했습니다. 관리자에게 문의하세요.");
-					}
-				},
-				error : function(e) {
-					console.log(e);
-				}
-			});
+							} else {
+								alert("에러가 발생했습니다. 관리자에게 문의하세요.");
+							}
+						},
+						error : function(e) {
+							console.log(e);
+						}
+					});
 		}
+	</script>
+	<!-- 삭제파트 끝 -->
+
+	<!-- 댓글 ajax 파트 -->
+	<script type="text/javascript">
+		$('#replyBtn')
+				.click(
+						function() {
+							if ($('#content').val().length <= 0) {
+								$('#replypwmsg').text("내용을 입력하세요.");
+								$('#replypwmsg').css("color", "red");
+								$('#content').focus();
+								return;
+							}
+							if ($('#replypw').val().length <= 0) {
+								$('#replypwmsg').text("패스워드를 입력하세요.");
+								$('#replypwmsg').css("color", "red");
+								$('#replypw').focus();
+								return;
+							}
+							var content = $("#content").val().replace("\n",
+									"<br>");
+
+							const info = JSON.stringify({
+								bno_num : $('#bno').val(),
+								depth : "0",
+								parent_id : "0",
+								writer : $('#writer').val(),
+								content : content,
+								pw : $('#replypw').val()
+							});
+							$
+									.ajax({
+										data : info,
+										url : "${pageContext.request.contextPath}/board/replyAdd",
+										type : "post",
+										dataType : "json",
+										contentType : "application/json; charset=UTF-8",
+										success : function(data) {
+											if (data.code == 'OK') {
+												var html = "";
+												html += "<div>"
+												html += "<div><table class='table'><h6><strong>"
+														+ $('#writer').val()
+														+ "</strong></h6>"
+												html += content
+														+ "<tr><td></td></tr>"
+												html += "</table></div>"
+												html += "</div>";
+												$('#commentList').append(html);
+												$('#content').val("");
+												$('#replypw').val("");
+											} else {
+												console.log(data.message);
+											}
+										},
+										error : function(e) {
+											console.log(e);
+										}
+									});
+						});
 	</script>
 </body>
 </html>
