@@ -29,4 +29,9 @@ public class RecipeSVCImpl implements RecipeSVC {
 	public RecipeVO viewRecipe(int rno) {
 		return recipeDAO.viewRecipe(rno);
 	}
+	
+	@Override
+	public RecipeVO home3() {
+		return recipeDAO.home3();
+	}
 }

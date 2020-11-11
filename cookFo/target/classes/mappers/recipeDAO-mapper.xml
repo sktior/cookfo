@@ -15,4 +15,12 @@
 		select rno,name,category,way,kcal,pro,fat,img1,img2,img3,img4,img5 from recipe where rno = #{rno}
 	</select>
 	
+	<select id="today" resultType="com.ms.cook.recipe.vo.RecipeVO">
+	<![CDATA[
+		select * from(
+    		select * from RECIPE
+    		order by DBMS_RANDOM.RANDOM
+			) where rownum < 2
+	]]>
+	</select>
 </mapper>

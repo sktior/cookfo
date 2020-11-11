@@ -28,4 +28,9 @@ public class RecipeDAOImpl implements RecipeDAO {
 		return sqlSession.selectOne("mappers.recipeDAO-mapper.viewRecipe",rno);
 	}
 	
+	@Override
+	public RecipeVO home3() {
+		return sqlSession.selectOne("mappers.recipeDAO-mapper.today");
+	}
+	
 }

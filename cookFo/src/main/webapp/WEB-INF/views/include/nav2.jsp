@@ -23,7 +23,7 @@
 				href="#nav-profile" role="tab" aria-controls="nav-profile"
 				aria-selected="false">인기 레시피</a> <a class="nav-item nav-link"
 				id="home3" data-toggle="tab" href="#nav-contact"
-				role="tab" aria-controls="nav-contact" aria-selected="false">오늘의 요리</a>
+				role="tab" aria-controls="nav-contact" aria-selected="false">오늘 뭐먹지?</a>
 		</div>
 	</nav>
 	<div id="content">
@@ -40,12 +40,12 @@
 		
 		$('#home2').click(function(){
 			$('#content').empty();	
-			$('#content').append("home2");
+			$('#content').load("${pageContext.request.contextPath}/recipe/home2");
 		})
 		
 		$('#home3').click(function(){
 			$('#content').empty();	
-			$('#content').append("home3");
+			$('#content').load("${pageContext.request.contextPath}/recipe/home3");
 		})
 	</script>
 </body>

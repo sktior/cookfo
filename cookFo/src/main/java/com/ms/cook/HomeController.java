@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,12 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ms.cook.recipe.vo.RecipeVO;
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
-	
+	@Inject
+	SqlSession sqlSession;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -39,6 +45,5 @@ public class HomeController {
 	public String home1(Locale locale, Model model) {
 		return "main/home1";
 	}
-	
 	
 }

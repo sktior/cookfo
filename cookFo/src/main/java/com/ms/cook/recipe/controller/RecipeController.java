@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -45,6 +46,19 @@ public class RecipeController {
 		model.addAttribute("vo",vo);
 		return "recipe/recipeView";
 	}
+	@RequestMapping(value = "/home3", method = RequestMethod.GET)
+	public String home3(Locale locale, Model model) {
+		System.out.println("home3");
+		RecipeVO vo = new RecipeVO();
+		vo = recipeSVC.home3();
+		model.addAttribute("vo",vo);
+		return "main/home3";
+	}
+	@RequestMapping(value = "/home2", method = RequestMethod.GET)
+	public String home2(Locale locale, Model model) {
+		return "main/home2";
+	}
+
 
 	/* 페이지 이동 끝 */
 
@@ -70,25 +84,12 @@ public class RecipeController {
 			}
 		}
 		String way = ((String)vo.getWay().replace("\r\n", "<br>"));
-		System.out.println("way : " + way);
 		vo.setImg1(filelist.get(0));
 		vo.setImg2(filelist.get(1));
 		vo.setImg3(filelist.get(2));
 		vo.setImg4(filelist.get(3));
 		vo.setImg5(filelist.get(4));
 		vo.setWay(way);
-		System.out.println(vo.getName());
-		System.out.println(vo.getCategory());
-		System.out.println(vo.getFat());
-		System.out.println(vo.getKcal());
-		System.out.println(vo.getPro());
-		System.out.println(vo.getRno());
-		System.out.println(vo.getWay());
-		System.out.println(vo.getImg1());
-		System.out.println(vo.getImg2());
-		System.out.println(vo.getImg3());
-		System.out.println(vo.getImg4());
-		System.out.println(vo.getImg5());
 		recipeSVC.add(vo);
 		return "redirect:list";
 	}

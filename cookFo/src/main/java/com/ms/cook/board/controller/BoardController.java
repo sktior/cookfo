@@ -113,6 +113,42 @@ public class BoardController {
 		return result;
 	}
 	
+	@RequestMapping(value = "replyCheck", method=RequestMethod.POST)
+	public @ResponseBody Object replyCheck(@RequestBody HashMap<String,Object> param) {
+		System.out.println(param);
+		String pw = replySVC.replyCheck(param);
+		Map<String,Object> result = new HashMap<String,Object>();
+		if(pw.equals(param.get("pw"))) {
+			result.put("code", "OK");
+		}else {
+			result.put("code", "FAIL");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "replyMod", method=RequestMethod.POST)
+	public @ResponseBody Object replyMod(@RequestBody HashMap<String, Object> param) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		int ret = replySVC.replyMod(param);
+		if(ret >= 1) {
+			result.put("code", "OK");
+		}else {
+			result.put("code", "FAIL");
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "replyDel", method=RequestMethod.POST)
+	public @ResponseBody Object replyDel(@RequestBody HashMap<String,Object> param) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		int ret = replySVC.replyDel(param);
+		if(ret >= 1) {
+			result.put("code", "OK");
+		}else {
+			result.put("code", "FAIL");
+		}
+		return result;
+	}
 	
 	// 댓글 끝
 }

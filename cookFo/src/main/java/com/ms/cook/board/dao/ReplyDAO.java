@@ -8,4 +8,7 @@ import com.ms.cook.board.vo.ReplyVO;
 public interface ReplyDAO {
 	public int replyAdd(Map<String, Object> param);
 	public List<ReplyVO> replyList(int bno_num);
+	public String replyCheck(Map<String, Object> param);
+	public int replyMod(Map<String, Object> param);
+	public int replyDel(Map<String, Object> param);
 }

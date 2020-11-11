@@ -69,36 +69,40 @@
 	<br>
 
 	<!-- 댓글 부분 -->
-	<div class="container">
-		<input type="hidden" id="writer" value="${sessionScope.info.id }">
-		<form id="commentForm" name="commentForm" method="post">
-			<br> <br>
-			<div>
+	<c:if test='${sessionScope.info ne null }'>
+		<div class="container">
+			<input type="hidden" id="writer" value="${sessionScope.info.id }">
+			<form id="commentForm" name="commentForm" method="post">
+				<br> <br>
 				<div>
-					<span><strong>댓글</strong></span>
+					<div>
+						<span><strong>댓글</strong></span>
+					</div>
+					<div>
+						<table class="table">
+							<tr>
+								<td><textarea style="width: 1100px" rows="3" cols="30"
+										id="content" name="content" placeholder="댓글을 입력하세요"></textarea>
+									<br>
+									<div>
+										<a href='javascript:;' class="btn pull-right btn-primary"
+											id="replyBtn">등록</a> <input type="password" id="replypw"
+											placeholder="패스워드">
+										<div id="replypwmsg"></div>
+									</div></td>
+							</tr>
+						</table>
+					</div>
 				</div>
-				<div>
-					<table class="table">
-						<tr>
-							<td><textarea style="width: 1100px" rows="3" cols="30"
-									id="content" name="content" placeholder="댓글을 입력하세요"></textarea>
-								<br>
-								<div>
-									<a href='javascript:;' class="btn pull-right btn-primary"
-										id="replyBtn">등록</a> <input type="password" id="replypw"
-										placeholder="패스워드">
-									<div id="replypwmsg"></div>
-								</div></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</form>
-	</div>
+			</form>
+		</div>
+	</c:if>
 	<div class="container">
 		<form id="commentListForm" name="commentListForm" method="post">
 			<div id="commentList">
-				<c:forEach var="row" items="${reply }">
+				<c:forEach var="row" items="${reply }" varStatus="status">
+					<input type="hidden" class="rnonum${status.index }"
+						value="${row.rno }">
 					<div>
 						<div>
 							<table class='table'>
@@ -107,9 +111,12 @@
 								</h6>
 								${row.content }
 								<c:if test="${sessionScope.info.id eq row.writer }">
-								<a href='javascript:;' class="btn pull-right btn-primary"
-									id="replydelBtn">삭제</a>
-									</c:if>
+									<a href='javascript:;'
+										class="btn pull-right btn-primary replymodBtn"
+										onClick="replymodBtn('${status.index}')">수정</a>
+									<a href='javascript:;'
+										class="btn pull-right btn-primary replydelBtn" onclick="replydelBtn('${status.index}')">삭제</a>
+								</c:if>
 								<tr>
 									<td></td>
 								</tr>
@@ -198,6 +205,75 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 댓글 수정 비밀번호 체크 -->
+	<div class="modal" id="checkReplyModal">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">비밀번호 확인(수정)</h4>
+					<button type="button" class="modreplyclose" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					비밀번호 : <input type="password" id="replypwchk" name="pwchk">
+					<div id="errmsgdel"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="checkmod">수정</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="modreplyclose">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 댓글 수정 란 -->
+	<div class="modal" id="replymodForm">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">댓글 수정</div>
+				<div class="modal-body">
+					내용 :
+					<textarea placeholder="내용" name="content" maxlength="3000"
+						id="newreplycontent" style="height: 350px; width: 400px;"></textarea>
+					<div id="errmsgcontentreply"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="doreplymod">수정</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="replyclose">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 댓글 삭제 비밀번호 체크 -->
+	<div class="modal" id="checkdelReplyModal">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">비밀번호 확인(삭제)</h4>
+					<button type="button" class="delreplyclose" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					비밀번호 : <input type="password" id="replydelpwchk" name="pwchk">
+					<div id="errmsreplygdel"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="checkdel">수정</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="delreplyclose">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>
 
 	<!-- 수정파트 -->
@@ -387,7 +463,9 @@
 														+ $('#writer').val()
 														+ "</strong></h6>"
 												html += content
-														+ "<tr><td></td></tr>"
+												html += "<a href='javascript:;' class='btn pull-right btn-primary' class='replymodBtn'>수정</a>"
+												html += "<a href='javascript:;' class='btn pull-right btn-primary' class='replydelBtn'>삭제</a>"
+												html += "<tr><td></td></tr>"
 												html += "</table></div>"
 												html += "</div>";
 												$('#commentList').append(html);
@@ -402,6 +480,128 @@
 										}
 									});
 						});
+		function replymodBtn(num) {
+			var replymodal = document.getElementById('checkReplyModal');
+			replymodal.style.display = "block";
+			$('.modreplyclose').click(function() {
+				replymodal.style.display = "none";
+			})
+			$('#modreplyclose').click(function() {
+				replymodal.style.display = "none";
+			})
+			$('#checkmod')
+					.click(
+							function() {
+								var pw = $('#replypwchk').val();
+								var rno = $('.rnonum' + num).val();
+								const info = JSON.stringify({
+									pw : pw,
+									rno : rno
+								});
+								$
+										.ajax({
+											data : info,
+											url : "${pageContext.request.contextPath}/board/replyCheck",
+											type : "post",
+											dataType : "json",
+											contentType : "application/json; charset=UTF-8",
+											success : function(data) {
+												if (data.code == 'OK') {
+													var modreplymodal = document
+															.getElementById('replymodForm');
+													replymodal.style.display = "none";
+													modreplymodal.style.display = "block";
+													$('#replyclose')
+															.click(
+																	function() {
+																		modreplymodal.style.display = "none";
+																	})
+													$('#doreplymod')
+															.click(
+																	function() {
+																		const replyinfo = JSON
+																				.stringify({
+																					content : $(
+																							'#newreplycontent')
+																							.val(),
+																					rno : rno
+																				});
+																		$
+																				.ajax({
+																					data : replyinfo,
+																					url : "${pageContext.request.contextPath}/board/replyMod",
+																					type : "post",
+																					dataType : "json",
+																					contentType : "application/json; charset=UTF-8",
+																					success : function(
+																							data) {
+																						if (data.code == 'OK') {
+																							location
+																									.reload();
+																						} else {
+																							alert("수정에 실패했습니다.");
+																						}
+																					}
+																				});
+																	})
+
+												} else {
+													console.log("비번 틀림")
+												}
+											},
+											error : function(e) {
+												console.log(e);
+											}
+										});
+							});
+		};
+		function replydelBtn(num){
+			$('#replydelpwchk').val("");
+			var replydelmodal = document.getElementById('checkdelReplyModal');
+			replydelmodal.style.display = "block";
+			$('.delreplyclose').click(function() {
+				replydelmodal.style.display = "none";
+			})
+			$('#delreplyclose').click(function() {
+				replydelmodal.style.display = "none";
+			})
+			$('#checkdel').click(function (){
+				var pw = $('#replydelpwchk').val();
+				var rno = $('.rnonum' + num).val();
+				const info = JSON.stringify({
+					pw : pw,
+					rno : rno
+				});
+				$.ajax({
+					data : info,
+					url : "${pageContext.request.contextPath}/board/replyCheck",
+					type : "post",
+					dataType : "json",
+					contentType : "application/json; charset=UTF-8",
+					success : function(data) {
+						if(data.code == 'OK'){
+							const inforno = JSON.stringify({rno:rno});
+							$.ajax({
+								data : inforno,
+								url : "${pageContext.request.contextPath}/board/replyDel",
+								type : "post",
+								dataType : "json",
+								contentType : "application/json; charset=UTF-8",
+								success : function(e){
+									if(e.code == 'OK'){
+										location.reload();
+									}else{
+										alert("에러발생");
+									}
+								}
+							});
+						}else{
+							console.log("틀림");
+						}
+					}
+				});
+			})
+		}
 	</script>
 </body>
 </html>

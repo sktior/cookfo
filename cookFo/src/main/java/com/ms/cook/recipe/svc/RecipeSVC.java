@@ -8,4 +8,5 @@ public interface RecipeSVC {
 	public int add(RecipeVO vo);
 	public List<RecipeVO> RecipeList();
 	public RecipeVO viewRecipe(int rno);
+	public RecipeVO home3();
 }
