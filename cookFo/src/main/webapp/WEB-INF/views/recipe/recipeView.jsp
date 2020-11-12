@@ -4,7 +4,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <!-- 합쳐지고 최소화된 최신 CSS -->
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -20,11 +20,35 @@
 <title>쿸포</title>
 </head>
 <body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var id = '${sessionScope.info.id}';
+			var name = '${vo.name}';
+			const param = JSON.stringify({id:id, name:name});
+			$.ajax({
+				data : param,
+				url : "${pageContext.request.contextPath}/jjim/check",
+				type : "post",
+				datatype : "json",
+				contentType : "application/json; charset=UTF-8",
+				success : function(data){
+					if(data.code == 'OK'){
+						$('.far').attr('class','fas fa-star');
+					}
+				}			
+			});
+		});
+	</script>
+	
 	<%@ include file="/WEB-INF/views/include/nav_head.jsp"%>
 	<%@ include file="/WEB-INF/views/include/nav.jsp"%>
 	<br>
 	<br>
-	<div class="container p-3 my-3 bg-dark text-white">${vo.name }</div>
+	<div class="container p-3 my-3 bg-dark text-white">${vo.name }
+	<c:if test="${sessionScope.info ne null }">
+	 <a href="javascript:;" class="addjjim"><i class="far fa-star" style="color:yellow;"></i></a>
+	</c:if>
+	</div>
 	<div class="container-fluid bg-3 text-center">
 		<div class="container">
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -83,5 +107,24 @@
 	<br>
 	<br>
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>
+	<script type="text/javascript">
+		$('.addjjim').click(function(){
+			var id = '${sessionScope.info.id}';
+			var name = '${vo.name}';
+			const param = JSON.stringify({id:id, name:name});
+			$.ajax({
+				data : param,
+				url : "${pageContext.request.contextPath}/jjim/addJjim",
+				type : "post",
+				datatype : "json",
+				contentType : "application/json; charset=UTF-8",
+				success : function(data){
+					if(data.code == 'OK'){
+						$('.far').attr('class','fas fa-star');
+					}
+				}			
+			});
+		});
+	</script>
 </body>
 </html>

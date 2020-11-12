@@ -27,24 +27,24 @@
 			<div class="item active">
 				<img src="${pageContext.request.contextPath}/resources/img/banner.jpg" alt="New York" style="width:100%; height:350px;">
 				<div class="carousel-caption">
-					<h3>New York</h3>
-					<p>The atmosphere in New York is lorem ipsum.</p>
+					<h3>레시피</h3>
+					<p>요리 레시피를 확인하세요~!</p>
 				</div>
 			</div>
 
 			<div class="item">
 				<img src="${pageContext.request.contextPath}/resources/img/banner.jpg" alt="New York" style="width:100%; height:350px;">
 				<div class="carousel-caption">
-					<h3>Chicago</h3>
-					<p>Thank you, Chicago - A night we won't forget.</p>
+					<h3>요리채팅</h3>
+					<p>요리중 모르는것이 있을땐 사용자들에게 질문하세요~!</p>
 				</div>
 			</div>
 
 			<div class="item">
 				<img src="${pageContext.request.contextPath}/resources/img/banner.jpg" alt="New York" style="width:100%; height:350px;">
 				<div class="carousel-caption">
-					<h3>LA</h3>
-					<p>Even though the traffic was a mess, we had the best time.</p>
+					<h3>나만의 레시피</h3>
+					<p>마음에 드는 레시피를 저장하세요!!</p>
 				</div>
 			</div>
 		</div>
