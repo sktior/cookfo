@@ -21,6 +21,8 @@
 </head>
 <body>
 	<script type="text/javascript">
+		var toggle = 0;
+		console.log("시작 토글 : " + toggle);
 		$(document).ready(function(){
 			var id = '${sessionScope.info.id}';
 			var name = '${vo.name}';
@@ -34,6 +36,11 @@
 				success : function(data){
 					if(data.code == 'OK'){
 						$('.far').attr('class','fas fa-star');
+						toggle = 1;
+						console.log(toggle);
+					}else{
+						toggle = 0;
+						console.log(toggle);
 					}
 				}			
 			});
@@ -112,19 +119,38 @@
 			var id = '${sessionScope.info.id}';
 			var name = '${vo.name}';
 			const param = JSON.stringify({id:id, name:name});
-			$.ajax({
-				data : param,
-				url : "${pageContext.request.contextPath}/jjim/addJjim",
-				type : "post",
-				datatype : "json",
-				contentType : "application/json; charset=UTF-8",
-				success : function(data){
-					if(data.code == 'OK'){
-						$('.far').attr('class','fas fa-star');
-					}
-				}			
-			});
+			if( toggle == 0){
+				$.ajax({
+					data : param,
+					url : "${pageContext.request.contextPath}/jjim/addJjim",
+					type : "post",
+					datatype : "json",
+					contentType : "application/json; charset=UTF-8",
+					success : function(data){
+						if(data.code == 'OK'){
+							$('.far').attr('class','fas fa-star');
+							toggle = 1;
+						}
+					}			
+				});
+			}else{
+				$.ajax({
+					data : param,
+					url : "${pageContext.request.contextPath}/jjim/delJjim",
+					type : "post",
+					datatype : "json",
+					contentType : "application/json; charset=UTF-8",
+					success : function(data){
+						if(data.code == 'OK'){
+							$('.fas').attr('class','far fa-star');
+							toggle = 0;
+						}
+					}			
+				});
+			}
 		});
+
+		
 	</script>
 </body>
 </html>

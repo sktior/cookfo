@@ -43,4 +43,16 @@ public class JjimController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="delJjim", method=RequestMethod.POST, produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public Object delJjim(@RequestBody HashMap<String, Object> param) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int ret = jjimSVC.delJjim(param);
+		if(ret >= 1) {
+			result.put("code","OK");
+		}else {
+			result.put("code", "FAIL");
+		}
+		return result;
+	}
 }

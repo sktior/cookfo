@@ -22,4 +22,9 @@ public class JjimSVCImpl implements JjimSVC {
 	public int check(HashMap<String, Object> param) {
 		return jjimDAO.check(param);
 	}
+	
+	@Override
+	public int delJjim(HashMap<String, Object> param) {
+		return jjimDAO.delJjim(param);
+	}
 }

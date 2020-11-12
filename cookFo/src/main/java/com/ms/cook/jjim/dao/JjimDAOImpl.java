@@ -21,4 +21,9 @@ public class JjimDAOImpl implements JjimDAO {
 	public int check(HashMap<String, Object> param) {
 		return sqlSession.selectOne("mappers.jjimDAO-mapper.check",param);
 	}
+	
+	@Override
+	public int delJjim(HashMap<String, Object> param) {
+		return sqlSession.delete("mappers.jjimDAO-mapper.delJjim",param);
+	}
 }

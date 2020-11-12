@@ -8,4 +8,8 @@
 	<select id="check" parameterType="java.util.HashMap" resultType="int">
 		select count(*) from jjimlist where name=#{name} and id=#{id}
 	</select>
+	
+	<delete id="delJjim" parameterType="java.util.HashMap">
+		delete jjimlist where name=#{name} and id=#{id}
+	</delete>
 </mapper>
