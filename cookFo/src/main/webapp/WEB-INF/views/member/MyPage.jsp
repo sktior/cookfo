@@ -45,7 +45,7 @@
 				</tr>
 				<tr class="success">
 					<td>나의리스트</td>
-					<td><a href="#">이동</a></td>
+					<td><a href="${pageContext.request.contextPath}/member/myList">이동</a></td>
 				</tr>
 				<tr class="danger">
 					<td>내가쓴글</td>

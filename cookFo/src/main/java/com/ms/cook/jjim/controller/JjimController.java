@@ -1,6 +1,8 @@
 package com.ms.cook.jjim.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -55,4 +57,19 @@ public class JjimController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="myRecipe", method=RequestMethod.POST, produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public Object myRecipe(@RequestBody HashMap<String, Object> param) {
+		List<String> list = new ArrayList<String>();
+		list = jjimSVC.myRecipe(param);
+		return list;
+	}
+	/*
+	@RequestMapping(value="delmyRecipe", method=RequestMethod.POST, produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public Object delmyRecipe(@RequestBody HashMap<String, Object> param) {
+		int ret ;
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", "OK");
+		return result;
+	}*/
 }

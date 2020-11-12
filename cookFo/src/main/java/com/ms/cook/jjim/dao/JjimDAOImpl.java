@@ -1,6 +1,7 @@
 package com.ms.cook.jjim.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -25,5 +26,10 @@ public class JjimDAOImpl implements JjimDAO {
 	@Override
 	public int delJjim(HashMap<String, Object> param) {
 		return sqlSession.delete("mappers.jjimDAO-mapper.delJjim",param);
+	}
+	
+	@Override
+	public List<String> myRecipe(HashMap<String, Object> param) {
+		return sqlSession.selectList("mappers.jjimDAO-mapper.myRecipe",param);
 	}
 }

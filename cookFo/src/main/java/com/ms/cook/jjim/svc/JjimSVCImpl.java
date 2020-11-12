@@ -1,6 +1,7 @@
 package com.ms.cook.jjim.svc;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,5 +27,10 @@ public class JjimSVCImpl implements JjimSVC {
 	@Override
 	public int delJjim(HashMap<String, Object> param) {
 		return jjimDAO.delJjim(param);
+	}
+	
+	@Override
+	public List<String> myRecipe(HashMap<String, Object> param) {
+		return jjimDAO.myRecipe(param);
 	}
 }

@@ -40,6 +40,10 @@ public class MemberController {
 	public String myPage() {
 		return "member/MyPage";
 	}
+	@RequestMapping(value = "/myList", method = RequestMethod.GET)
+	public String myList() {
+		return "member/MyList";
+	}
 	
 	/* 페이지 이동 모음 끝 */
 

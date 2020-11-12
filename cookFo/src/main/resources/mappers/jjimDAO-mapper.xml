@@ -12,4 +12,9 @@
 	<delete id="delJjim" parameterType="java.util.HashMap">
 		delete jjimlist where name=#{name} and id=#{id}
 	</delete>
+	
+	<select id="myRecipe" parameterType="java.util.HashMap" resultType="String">
+		select name from jjimlist where id = #{id}
+	</select>
+	
 </mapper>
