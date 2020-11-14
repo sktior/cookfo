@@ -33,4 +33,9 @@ public class JjimSVCImpl implements JjimSVC {
 	public List<String> myRecipe(HashMap<String, Object> param) {
 		return jjimDAO.myRecipe(param);
 	}
+	
+	@Override
+	public int getRno(HashMap<String, Object> param) {
+		return jjimDAO.getRno(param);
+	}
 }

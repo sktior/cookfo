@@ -32,4 +32,9 @@ public class JjimDAOImpl implements JjimDAO {
 	public List<String> myRecipe(HashMap<String, Object> param) {
 		return sqlSession.selectList("mappers.jjimDAO-mapper.myRecipe",param);
 	}
+	
+	@Override
+	public int getRno(HashMap<String, Object> param) {
+		return sqlSession.selectOne("mappers.jjimDAO-mapper.getRno",param);
+	}
 }

@@ -65,4 +65,9 @@ public class JjimController {
 		return list;
 	}
 	
+	@RequestMapping(value="getRno", method=RequestMethod.POST, produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public int getRno(@RequestBody HashMap<String, Object> param) {
+		return jjimSVC.getRno(param);
+	}
+	
 }

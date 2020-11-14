@@ -35,7 +35,7 @@
 					for(var i=0; i<data.length; i++){
 						var html = "";
 						html += "<tr class='Info"+i+" success'>"
-						html += "<td>" + "<a href='javascript:;'> <span class='item"+i+"'>"  + data[i] +  "</span> </a> </td>"
+						html += "<td>" + "<a href='javascript:;' class='list"+i+"' onClick='foward("+i+");'> <span class='item"+i+"'>"  + data[i] +  "</span> </a> </td>"
 						html += "<td>"
 						html += "<a href='javascript:;' onClick='del(" + i + ")';>삭제</a>"
 						html += "</td>";
@@ -59,7 +59,6 @@
 				</tr>
 			</thead>
 			<tbody class="list">
-				
 			</tbody>
 		</table>
 	</div>
@@ -81,11 +80,26 @@
 					if(e.code == 'OK'){
 						$("tr").remove('.Info'+data);
 					}else{
-						alert("삭제에 실패했습니다.");
+						alert()
 					}
 				},
 				error : function(e){
 					console.log(e);
+				}
+			});
+		}
+
+		function foward(e){
+			var name = $('.list'+e).children().text();
+			const param = JSON.stringify({name:name})
+			$.ajax({
+				data : param,
+				url : "${pageContext.request.contextPath}/jjim/getRno",
+				type : "post",
+				datatype : "json",
+				contentType : "application/json; charset=UTF-8",
+				success : function(e){
+					location.href="${pageContext.request.contextPath}/recipe/recipeView/"+e;
 				}
 			});
 		}

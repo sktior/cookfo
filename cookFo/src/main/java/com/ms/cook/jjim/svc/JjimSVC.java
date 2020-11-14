@@ -8,4 +8,5 @@ public interface JjimSVC {
 	public int check(HashMap<String, Object> param);
 	public int delJjim(HashMap<String, Object> param);
 	public List<String> myRecipe(HashMap<String, Object> param);
+	public int getRno(HashMap<String, Object> param);
 }

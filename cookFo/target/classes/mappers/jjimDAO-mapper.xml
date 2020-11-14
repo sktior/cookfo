@@ -17,4 +17,8 @@
 		select name from jjimlist where id = #{id}
 	</select>
 	
+	<select id="getRno" parameterType="java.util.HashMap" resultType="int">
+		select rno from recipe where name = #{name}
+	</select>
+	
 </mapper>
