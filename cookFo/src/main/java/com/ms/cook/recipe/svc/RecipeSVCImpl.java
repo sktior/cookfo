@@ -1,5 +1,6 @@
 package com.ms.cook.recipe.svc;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,5 +34,10 @@ public class RecipeSVCImpl implements RecipeSVC {
 	@Override
 	public RecipeVO home3() {
 		return recipeDAO.home3();
+	}
+	
+	@Override
+	public List<RecipeVO> search(HashMap<String, Object> param) {
+		return recipeDAO.search(param);
 	}
 }

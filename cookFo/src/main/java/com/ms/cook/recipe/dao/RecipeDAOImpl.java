@@ -1,5 +1,6 @@
 package com.ms.cook.recipe.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -31,6 +32,11 @@ public class RecipeDAOImpl implements RecipeDAO {
 	@Override
 	public RecipeVO home3() {
 		return sqlSession.selectOne("mappers.recipeDAO-mapper.today");
+	}
+	
+	@Override
+	public List<RecipeVO> search(HashMap<String, Object> param) {
+		return sqlSession.selectList("mappers.recipeDAO-mapper.search",param);
 	}
 	
 }

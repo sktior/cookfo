@@ -3,6 +3,7 @@ package com.ms.cook.recipe.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -10,11 +11,14 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ms.cook.recipe.svc.RecipeSVC;
@@ -93,5 +97,14 @@ public class RecipeController {
 		recipeSVC.add(vo);
 		return "redirect:list";
 	}
-
+	
+	@RequestMapping(value="search", method=RequestMethod.POST, produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public @ResponseBody Object search(@RequestBody HashMap<String, Object> param) {
+		List<RecipeVO> list = new ArrayList<RecipeVO>();
+		list = recipeSVC.search(param);
+		for(int i=0; i<list.size(); i++) {
+			System.out.println(list.get(i).toString());
+		}
+		return list;
+	}
 }

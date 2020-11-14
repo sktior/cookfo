@@ -23,4 +23,10 @@
 			) where rownum < 2
 	]]>
 	</select>
+	
+	<select id="search" parameterType="java.util.HashMap" resultType="com.ms.cook.recipe.vo.RecipeVO">
+	<![CDATA[
+		select * from recipe where name LIKE '%' || #{name} || '%'
+	]]>
+	</select>
 </mapper>
