@@ -14,8 +14,35 @@
 <head>
 </head>
 <body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$.ajax({
+				url : "${pageContext.request.contextPath}/recipe/rowfat",
+				type : "post",
+				dataType : "json",
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					for(var i=0; i<data.length; i++){
+						var html = "";
+						html += "<div class='col-sm-4'>"
+						html += "<div class='thumbnail'>"
+						html += "<img src='http://localhost:9080/img/"+data[i].img1+"'"
+						html += "alt='Random Name' style='width: 200; height: 200;'>"
+						html += "<p>"
+						html += "<strong><a href='${pageContext.request.contextPath}/recipe/recipeView/"+data[i].rno+"'>"+data[i].name+"</a></strong>"
+						html += "</p>"
+						html += "<p>"+data[i].category+"</p>"
+						html += "</div>"
+						html += "</div>";
+						$('.container').append(html);
+					}
+				}
+			})
+		})		
+	</script>
 	<div class="container text-center">
-		<h2>이벤트</h2>
+		<h2>저지방 레시피</h2><br><br>
 	</div>
+	
 </body>
 </html>

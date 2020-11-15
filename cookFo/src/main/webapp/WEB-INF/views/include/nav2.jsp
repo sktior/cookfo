@@ -21,7 +21,7 @@
 				aria-controls="nav-home" aria-selected="true">메인</a> <a
 				class="nav-item nav-link" id="home2" data-toggle="tab"
 				href="#nav-profile" role="tab" aria-controls="nav-profile"
-				aria-selected="false">인기 레시피</a> <a class="nav-item nav-link"
+				aria-selected="false">저지방 레시피</a> <a class="nav-item nav-link"
 				id="home3" data-toggle="tab" href="#nav-contact"
 				role="tab" aria-controls="nav-contact" aria-selected="false">오늘 뭐먹지?</a>
 		</div>

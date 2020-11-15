@@ -29,4 +29,12 @@
 		select * from recipe where name LIKE '%' || #{name} || '%'
 	]]>
 	</select>
+	
+	<select id="rowfat" resultType="com.ms.cook.recipe.vo.RecipeVO">
+	<![CDATA[
+		select * 
+		from ( select rno, name, category, img1,fat, rank() over (order by fat) as ranking from recipe) 
+		where ranking <= 3
+	]]>
+	</select>
 </mapper>

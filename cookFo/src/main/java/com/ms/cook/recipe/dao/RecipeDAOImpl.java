@@ -39,4 +39,9 @@ public class RecipeDAOImpl implements RecipeDAO {
 		return sqlSession.selectList("mappers.recipeDAO-mapper.search",param);
 	}
 	
+	@Override
+	public List<RecipeVO> rowfat() {
+		return sqlSession.selectList("mappers.recipeDAO-mapper.rowfat");
+	}
+	
 }

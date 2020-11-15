@@ -12,4 +12,5 @@ public interface RecipeDAO {
 	public RecipeVO viewRecipe(int rno);
 	public RecipeVO home3();
 	public List<RecipeVO> search(HashMap<String,Object>param);
+	public List<RecipeVO> rowfat();
 }

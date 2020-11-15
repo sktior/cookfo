@@ -107,4 +107,11 @@ public class RecipeController {
 		}
 		return list;
 	}
+	
+	@RequestMapping(value="rowfat", method=RequestMethod.POST, produces= {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public @ResponseBody Object rowfat() {
+		List<RecipeVO> list = new ArrayList<RecipeVO>();
+		list = recipeSVC.rowfat();
+		return list;
+	}
 }

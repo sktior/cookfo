@@ -40,4 +40,9 @@ public class RecipeSVCImpl implements RecipeSVC {
 	public List<RecipeVO> search(HashMap<String, Object> param) {
 		return recipeDAO.search(param);
 	}
+	
+	@Override
+	public List<RecipeVO> rowfat() {
+		return recipeDAO.rowfat();
+	}
 }
