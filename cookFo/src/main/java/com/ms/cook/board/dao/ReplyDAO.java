@@ -11,4 +11,8 @@ public interface ReplyDAO {
 	public String replyCheck(Map<String, Object> param);
 	public int replyMod(Map<String, Object> param);
 	public int replyDel(Map<String, Object> param);
+	
+	
+	public int rereplyAdd(Map<String, Object> param);
+	public List<ReplyVO> getrereply(int bno_num);
 }

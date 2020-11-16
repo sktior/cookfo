@@ -40,7 +40,7 @@
 	</insert>
 	
 	<select id="replyList" resultType="com.ms.cook.board.vo.ReplyVO">
-		select rno,bno_num,parent_id,depth,writer,content,pw from board_reply where bno_num = #{bno_num}
+		select rno,bno_num,parent_id,depth,writer,content,pw from board_reply where bno_num = #{bno_num} and parent_id = 0
 	</select>
 	
 	<select id="replyCheck" parameterType="java.util.HashMap" resultType="String">
@@ -55,4 +55,16 @@
 		delete board_reply where rno = #{rno}
 	</delete>
 	<!-- 댓글 부분 끝 -->
+	
+	<!-- 대댓글 부분 -->
+	<insert id="rereplyAdd" parameterType="java.util.HashMap">
+		insert into board_reply (rno,bno_num,depth,writer,content,pw,parent_id)
+		values(rno_seq.nextval,#{bno_num},#{depth},#{writer},#{content},#{pw},#{parent_id})
+	</insert>
+	
+	<select id="getrereply" resultType="com.ms.cook.board.vo.ReplyVO">
+	<![CDATA[
+		select * from board_reply where bno_num = #{bno_num} and parent_id <> 0
+	]]>
+	</select>
 </mapper>

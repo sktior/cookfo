@@ -100,12 +100,12 @@
 	<div class="container">
 		<form id="commentListForm" name="commentListForm" method="post">
 			<div id="commentList">
-				<c:forEach var="row" items="${reply }" varStatus="status">
+				<c:forEach var="row" items="${reply }" varStatus="status">	
 					<input type="hidden" class="rnonum${status.index }"
 						value="${row.rno }">
 					<div>
 						<div>
-							<table class='table'>
+							<table class='table re'>
 								<h6>
 									<strong>${row.writer }</strong>
 								</h6>
@@ -117,12 +117,39 @@
 									<a href='javascript:;'
 										class="btn pull-right btn-primary replydelBtn" onclick="replydelBtn('${status.index}')">삭제</a>
 								</c:if>
+									<a href='javascript:;' class="btn pull-right btn-primary rereplyBtn" onClick="rereplyBtn('${status.index }','${row.rno }','${row.depth }')">댓글</a>
 								<tr>
 									<td></td>
 								</tr>
 							</table>
 						</div>
 					</div>
+					<c:forEach var="rows" items="${rereply }" varStatus="idx">
+					<c:if test="${rows.parent_id eq row.rno }">
+						<input type="hidden" class="rernonum${idx.index }"
+						value="${rows.rno }">
+						<div>
+						<div>
+							<table class='table rere'>
+								<h6>
+									<strong style="padding-left:30px;">└> ${rows.writer }</strong>
+								</h6>
+								<div style="padding-left: 30px;">${rows.content }</div>
+								<c:if test="${sessionScope.info.id eq rows.writer }">
+									<a href='javascript:;'
+										class="btn pull-right btn-primary rereplymodBtn"
+										onClick="rereplymodBtn('${idx.index}')">수정</a>
+									<a href='javascript:;'
+										class="btn pull-right btn-primary rereplydelBtn" onclick="rereplydelBtn('${idx.index}')">삭제</a>
+								</c:if>
+								<tr>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					</c:if>
+					</c:forEach>
 				</c:forEach>
 			</div>
 		</form>
@@ -273,6 +300,30 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	<div class="modal" id="rereplyForm">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">대댓글 달기</div>
+				<div class="modal-body">
+					내용 :
+					<textarea placeholder="내용" name="content" maxlength="3000"
+						id="newrereplycontent" style="height: 350px; width: 400px;"></textarea>
+					<div id="errmsgcontentrereply"></div>
+					비밀번호 : <input type="password" id="rereplypw" name="pw">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="dorereplyadd">등록</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						id="rereplyclose">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>
 
@@ -601,6 +652,61 @@
 					}
 				});
 			})
+		}
+	</script>
+	<script type="text/javascript">
+		function rereplyBtn(num, parent_id, depth){
+			var bno_num = '${vo.bno}';
+			var reremodal = document.getElementById('rereplyForm');
+			var writer = '${sessionScope.info.id}';
+			reremodal.style.display = "block";
+			$('#rereplyclose').click(function(){
+				reremodal.style.display = "none";
+				$("#newrereplycontent").val("");
+				$("#rereplypw").val("");
+			});
+			$('#dorereplyadd').click(function(){
+				var content = $('#newrereplycontent').val();
+				var pw = $('#rereplypw').val();
+				depth *= 1;
+				var depthplus = depth + 1;
+				if(pw.length < 5){
+					alert("비밀번호를 제대로 작성해주세요.");
+					return;
+				}
+				const info = JSON.stringify({bno_num : bno_num , depth : depthplus, writer : writer,
+											content : content, pw : pw, parent_id : parent_id});
+				console.log("ajax 직전");
+				$.ajax({
+					data : info,
+					url : "${pageContext.request.contextPath}/board/rereplyAdd",
+					type : "post",
+					dataType : "json",
+					contentType : "application/json; charset=UTF-8",
+					success : function(e){
+						if(e.code == 'OK'){
+							location.reload();
+						}else{
+							alert("댓글 등록에 실패했습니다.")
+						}
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				});
+			})
+			
+		}
+
+		function rereplymodBtn(num){
+			console.log(num);
+			var rno = $('.rernonum'+num).val();
+			console.log(rno);
+		}
+		function rereplydelBtn(num){
+			console.log(num);
+			var rno = $('.rernonum'+num).val();
+			console.log(rno);
 		}
 	</script>
 </body>

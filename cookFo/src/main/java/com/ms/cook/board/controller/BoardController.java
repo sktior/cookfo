@@ -56,9 +56,11 @@ public class BoardController {
 	public String view(@PathVariable int bno,Model model) {
 		BoardVO vo = boardSVC.view(bno);
 		List<ReplyVO> replylist = replySVC.replyList(bno);
+		List<ReplyVO> rereplylist = replySVC.getrereply(bno);
 		boardSVC.cntplus(bno);
 		model.addAttribute("vo",vo);
 		model.addAttribute("reply",replylist);
+		model.addAttribute("rereply",rereplylist);
 		return "board/view";
 	}
 	
@@ -151,4 +153,18 @@ public class BoardController {
 	}
 	
 	// 댓글 끝
+	
+	// 대댓글 부분
+	@RequestMapping(value = "rereplyAdd", method=RequestMethod.POST)
+	public @ResponseBody Object rereplyAdd(@RequestBody HashMap<String,Object> param) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		int ret = replySVC.rereplyAdd(param);
+		if(ret >= 1) {
+			result.put("code", "OK");
+		}else {
+			result.put("code", "FAIL");
+		}
+		return result;
+	}
+	
 }

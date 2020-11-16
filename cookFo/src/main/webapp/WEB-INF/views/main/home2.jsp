@@ -34,13 +34,13 @@
 						html += "<p>"+data[i].category+"</p>"
 						html += "</div>"
 						html += "</div>";
-						$('.container').append(html);
+						$('.rowfat').append(html);
 					}
 				}
 			})
 		})		
 	</script>
-	<div class="container text-center">
+	<div class="container text-center rowfat">
 		<h2>저지방 레시피</h2><br><br>
 	</div>
 	

@@ -41,4 +41,13 @@ public class ReplySVCImpl implements ReplySVC {
 	public int replyDel(Map<String, Object> param) {
 		return replyDAO.replyDel(param);
 	}
+	
+	@Override
+	public int rereplyAdd(Map<String, Object> param) {
+		return replyDAO.rereplyAdd(param);
+	}
+	@Override
+	public List<ReplyVO> getrereply(int bno_num) {
+		return replyDAO.getrereply(bno_num);
+	}
 }

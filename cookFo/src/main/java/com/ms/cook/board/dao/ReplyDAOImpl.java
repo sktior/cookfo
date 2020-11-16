@@ -40,4 +40,14 @@ public class ReplyDAOImpl implements ReplyDAO {
 	public int replyDel(Map<String, Object> param) {
 		return sqlSession.delete("mappers.boardDAO-mapper.replyDel", param);
 	}
+	
+	@Override
+	public int rereplyAdd(Map<String, Object> param) {
+		return sqlSession.insert("mappers.boardDAO-mapper.rereplyAdd",param);
+	}
+	
+	@Override
+	public List<ReplyVO> getrereply(int bno_num) {
+		return sqlSession.selectList("mappers.boardDAO-mapper.getrereply",bno_num);
+	}
 }
