@@ -8,8 +8,16 @@
 	</insert>
 	
 	<select id="list" resultType="com.ms.cook.board.vo.BoardVO">
-		select bno,title,content,writer,pw,cdate,cnt from board order by bno desc
+	<![CDATA[
+		SELECT bno,title,content,writer,pw,cdate,cnt
+			FROM	(SELECT /*+INDEX_DESC(board board_pk) */
+						rownum rn, bno,title,content,writer,pw,cdate,cnt
+					from board where rownum <= #{pageNum} * #{amount})
+			where rn > (#{pageNum}-1) * #{amount}
+			ORDER BY bno DESC
+	]]>
 	</select>
+	
 	
 	<select id="view" parameterType="int" resultType="com.ms.cook.board.vo.BoardVO">
 		select bno,title,content,writer,pw,cdate,cnt from board where bno = #{bno}
@@ -66,5 +74,11 @@
 	<![CDATA[
 		select * from board_reply where bno_num = #{bno_num} and parent_id <> 0
 	]]>
+	</select>
+	<!-- 대댓글 끝 -->
+	
+	<!-- 페이징처리 -->
+	<select id="boardcnt" resultType="int">
+		select count(*) from board
 	</select>
 </mapper>

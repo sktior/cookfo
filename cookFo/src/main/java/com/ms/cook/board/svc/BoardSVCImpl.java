@@ -1,7 +1,6 @@
 package com.ms.cook.board.svc;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.ms.cook.board.dao.BoardDAO;
 import com.ms.cook.board.dao.ReplyDAO;
 import com.ms.cook.board.vo.BoardVO;
+import com.ms.cook.utils.paging.PagingCriteria;
 
 @Service
 public class BoardSVCImpl implements BoardSVC {
@@ -26,9 +26,9 @@ public class BoardSVCImpl implements BoardSVC {
 	}
 	
 	@Override
-	public List<BoardVO> list() {
+	public List<BoardVO> list(PagingCriteria paging) {
 		// TODO Auto-generated method stub
-		return boardDAO.list();
+		return boardDAO.list(paging);
 	}
 	
 	@Override
@@ -53,5 +53,8 @@ public class BoardSVCImpl implements BoardSVC {
 	
 	
 	
-	
+	@Override
+	public int boardcnt() {
+		return boardDAO.boardcnt();
+	}
 }

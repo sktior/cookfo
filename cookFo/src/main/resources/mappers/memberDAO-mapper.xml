@@ -22,4 +22,11 @@
 		update member set pw = #{pw} where id = #{id}
 	</select>
 	
+	<select id="getPw" resultType="String" parameterType="java.util.HashMap">
+		select pw from member where id = #{id}
+	</select>
+	
+	<delete id="doDel" parameterType="java.util.HashMap">
+		delete member where id = #{id}
+	</delete>
 </mapper>

@@ -117,7 +117,9 @@
 									<a href='javascript:;'
 										class="btn pull-right btn-primary replydelBtn" onclick="replydelBtn('${status.index}')">삭제</a>
 								</c:if>
+								<c:if test='${sessionScope.info ne null }'>
 									<a href='javascript:;' class="btn pull-right btn-primary rereplyBtn" onClick="rereplyBtn('${status.index }','${row.rno }','${row.depth }')">댓글</a>
+								</c:if>
 								<tr>
 									<td></td>
 								</tr>

@@ -56,4 +56,14 @@ public class MemberDAOImpl implements MemberDAO {
 	public int doMod(MemberVO vo) {
 		return sqlSession.update("mappers.memberDAO-mapper.doMod",vo);
 	}
+	
+	@Override
+	public String getPw(String id) {
+		return sqlSession.selectOne("mappers.memberDAO-mapper.getPw",id);
+	}
+	
+	@Override
+	public int doDel(HashMap<String, Object> param) {
+		return sqlSession.delete("mappers.memberDAO-mapper.doDel",param);
+	}
 }

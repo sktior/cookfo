@@ -1,5 +1,6 @@
 package com.ms.cook.member.svc;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -40,5 +41,14 @@ public class MemberSVCImpl implements MemberSVC {
 	@Override
 	public int doMod(MemberVO vo) {
 		return memberDAO.doMod(vo);
+	}
+	@Override
+	public String getPw(String id) {
+		return memberDAO.getPw(id);
+	}
+	
+	@Override
+	public int doDel(HashMap<String, Object> param) {
+		return memberDAO.doDel(param);
 	}
 }

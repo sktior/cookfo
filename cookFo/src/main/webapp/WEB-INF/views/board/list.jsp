@@ -43,10 +43,45 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<div class="container text-center">
+			<!-- 페이징 -->
+				<div class="paging">
+					<div id="pagingDiv">
+						<c:if test="${paging.prev}">
+							<a href="${paging.startPage - 1 }">이전</a>
+						</c:if>
+						<c:forEach var="num" begin="${paging.startPage}"
+							end="${paging.endPage }">
+						&nbsp;<a href="${num }">${num }</a>&nbsp;
+					</c:forEach>
+						<c:if test="${paging.next}">
+							<a id="next" href="${paging.endPage + 1 }">다음</a>
+						</c:if>
+					</div>
+					<form id="pagingFrm" name="pagingForm" action="board/list"
+						method="get">
+						<input type="hidden" id="pageNum" name="pageNum"
+							value="${paging.cri.pageNum }"> <input type="hidden"
+							id="amount" name="amount" value="${paging.cri.amount }">
+					</form>
+				</div>
+		</div>
 		<button class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/board/writeForm'">글쓰기</button>
 	</div>
 	<br>
 	<br>
 	<%@ include file="/WEB-INF/views/include/footer.jsp"%>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							//페이지 번호 이동
+							$('#pagingDiv a').click(function(e) {
+								e.preventDefault();
+								$('#pageNum').val($(this).attr("href"));
+								pagingForm.submit();
+							});
+						});
+	</script>
 </body>
 </html>

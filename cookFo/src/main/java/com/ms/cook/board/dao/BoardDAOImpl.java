@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.ms.cook.board.vo.BoardVO;
+import com.ms.cook.utils.paging.PagingCriteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -19,8 +20,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public List<BoardVO> list() {
-		return sqlSession.selectList("mappers.boardDAO-mapper.list");
+	public List<BoardVO> list(PagingCriteria paging) {
+		return sqlSession.selectList("mappers.boardDAO-mapper.list",paging);
 	}
 	
 	@Override
@@ -42,4 +43,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public int dodel(int bno) {
 		return sqlSession.delete("mappers.boardDAO-mapper.dodel",bno);
 	}
+	
+	
+	
+	@Override
+	public int boardcnt() {
+		return sqlSession.selectOne("mappers.boardDAO-mapper.boardcnt");
+	}
+	
 }

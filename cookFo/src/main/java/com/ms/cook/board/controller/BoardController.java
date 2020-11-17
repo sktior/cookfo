@@ -20,6 +20,8 @@ import com.ms.cook.board.svc.BoardSVC;
 import com.ms.cook.board.svc.ReplySVC;
 import com.ms.cook.board.vo.BoardVO;
 import com.ms.cook.board.vo.ReplyVO;
+import com.ms.cook.utils.paging.PageMaker;
+import com.ms.cook.utils.paging.PagingCriteria;
 
 @Controller
 @RequestMapping("/board/**")
@@ -33,9 +35,11 @@ public class BoardController {
 	// 원글 부분
 	
 	@RequestMapping(value = "list", method=RequestMethod.GET)
-	public String list(Model model) {
-		List<BoardVO> list = boardSVC.list();
+	public String list(Model model,PagingCriteria cri) {
+		int boardcnt = boardSVC.boardcnt();
+		List<BoardVO> list = boardSVC.list(cri);
 		model.addAttribute("list",list);
+		model.addAttribute("paging", new PageMaker(cri,boardcnt));
 		return "board/list";
 	}
 	
